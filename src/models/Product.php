@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use Core\Model;
 
 class Product extends Model
@@ -9,16 +10,18 @@ class Product extends Model
     private int $id;
     private string $name;
     private string $description;
-    private float $note; //float ?
+    // private float $note; //float ?
     private string $photo;
     private int $stock;
     private float $alcohol_percentage;
     private int $id_region;
-    private int $id_cepage;
-    private int $id_taste;
-    private int $id_association;
-    private int $id_comment;
-    
+    // private int $id_cepage;
+    // private int $id_taste;
+    // private int $id_association;
+    // private int $id_comment;
+    private int $id_type;
+    protected string $table_name = "product";
+
 
     /**
      * Get the value of id
@@ -29,11 +32,11 @@ class Product extends Model
         return $this->id;
     }
 
-     /**
+    /**
      * Get the value of name
      * @return string
-     */ 
-    public function getName():string
+     */
+    public function getName(): string
     {
         return $this->name;
     }
@@ -42,12 +45,10 @@ class Product extends Model
      * Set the value of name
      * @param string $name
      * @return void
-     */ 
-    public function setName(string $name):void
+     */
+    public function setName(string $name): void
     {
         $this->name = $name;
-
-       
     }
 
     /**
@@ -258,6 +259,25 @@ class Product extends Model
     {
         $this->id_comment = $id_comment;
     }
+
+    /**
+     * Get the value of id_type
+     * @return int 
+     */
+    public function getId_type(): int
+    {
+        return $this->id_type;
+    }
+
+    /**
+     * Set the value of id_type
+     * @param int $id_type
+     * @return void
+     */
+    public function setId_type(int $id_type): void
+    {
+        $this->id_type = $id_type;
+    }
     /**
      * Insérer un produit dans la BDD
      * @return int|false  l'id du dernier élément inséré ou false dans le cas d'échec
@@ -280,6 +300,4 @@ class Product extends Model
         ]);
         return $this->pdo->lastInsertId();
     }
-
-   
 }

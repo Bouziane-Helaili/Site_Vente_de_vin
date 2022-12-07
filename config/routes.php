@@ -5,7 +5,6 @@ use Core\Router;
 //Home
 Router::register('/', 'HomeController::show');
 
-
 // product  for employee
 Router::register('/product/insert', 'ProductController::insert');
 Router::register('/product/delete', 'ProductController::delete');
@@ -18,22 +17,22 @@ Router::register('/nos-coffrets', 'ProductController::showAllboxes');
 // product box
 Router::register('/nos-coffrets/vin-blanc', 'ProductController::showAllWhiteBox');
 Router::register('/nos-coffrets/vin-rouge', 'ProductController::showAllRedBox');
-Router::register('/nos-coffrets/nos-champagne', 'ProductController::showAllChampagneBox');
+Router::register('/nos-coffrets/nos-champagnes', 'ProductController::showAllChampagneBox');
 
 // product wines
 Router::register('/nos-vins/blanc', 'ProductController::showAllWhiteWines');
 Router::register('/nos-vins/rouge', 'ProductController::showAllRedWines');
-Router::register('/nos-vins/nos-champagne', 'ProductController::showAllChampagne');
-
+Router::register('/nos-vins/nos-champagnes', 'ProductController::showAllChampagne');
 
 // Fournisseur 
 Router::register('/nos-fournisseurs', 'SupplierController::showFournisseur');
 
 // Qui-sommes-nous
-Router::register('/qui-sommes-nous/contact', 'PresentationController::showContact');
-Router::register('/qui-sommes-nous/faq', 'PresentationController::showFaq');
-Router::register('/qui-sommes-nous/mentions-legales', 'PresentationController::showMention');
-Router::register('/qui-sommes-nous/presse', 'PresentationController::showPresse');
+Router::register('/nous-contacter', 'PresentationController::showContact');
+Router::register('/faq', 'PresentationController::showFaq');
+Router::register('/mentions-legales', 'PresentationController::showMention');
+Router::register('/presse', 'PresentationController::showPresse');
+Router::register('/qui-sommes-nous', 'PresentationController::showAboutUS');
 
 // Blog / articles
 Router::register('/blog', 'BlogController::showArticle');
@@ -51,7 +50,6 @@ Router::register('/employe', 'EmployeeController::index');
 // espace employé Commandes
 Router::register('/employe/commandes', 'OrderTrackingController::showAll');
 Router::register('/employe/commandes/details', 'OrderTrackingController::showOne');
-
 
 // Gestion des paiements
 Router::register('/employe/paiements', 'PaiementsController::index');
@@ -74,6 +72,8 @@ Router::register('/administrateur/edit', 'AdminController::edit');
 
 
 
+
+// A rajouter & | à modifier
 
 
 
