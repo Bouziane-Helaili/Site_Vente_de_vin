@@ -6,18 +6,15 @@ use Core\Router;
 Router::register('/', 'HomeController::show');
 
 // product  for employee
-Router::register('/product/insert', 'ProductController::insert');
+// Router::register('/stock/insert', 'StockController::showAllRegion');
+Router::register('/employe/stock/insert', 'ProductController::insert');
 Router::register('/product/delete', 'ProductController::delete');
-Router::register('/product/edit', 'ProductController::edit');
+// Router::register('/product/edit', 'ProductController::edit');
 
 // show all products 
 Router::register('/nos-vins', 'ProductController::showAllWines');
 Router::register('/nos-coffrets', 'ProductController::showAllboxes');
 
-// product box
-Router::register('/nos-coffrets/vin-blanc', 'ProductController::showAllWhiteBox');
-Router::register('/nos-coffrets/vin-rouge', 'ProductController::showAllRedBox');
-Router::register('/nos-coffrets/nos-champagnes', 'ProductController::showAllChampagneBox');
 
 // product wines
 Router::register('/nos-vins/blanc', 'ProductController::showAllWhiteWines');
@@ -43,6 +40,7 @@ Router::register('/blog/edit', 'BlogController::editArticle');
 Router::register('/login', 'UserController::login');
 Router::register('/register', 'UserController::insert');
 Router::register('/logout', 'UserController::logout');
+Router::register('/region', 'StockController::showAllRegion');
 
 // Accueil espace employé
 Router::register('/employe', 'EmployeeController::index');
@@ -56,8 +54,9 @@ Router::register('/employe/paiements', 'PaiementsController::index');
 
 // Gestion des stocks
 Router::register('/employe/stock', 'StockController::showAll');
-Router::register('/employe/stock/insert', 'StockController::insert');
+// Router::register('/employe/stock/insert', 'StockController::insert');
 Router::register('/employe/stock/edit', 'StockController::edit');
+Router::register('/employe/stock/delete', 'StockController::deleteFromStock');
 
 // Gestion des codes promos
 Router::register('/employe/promotion', 'PromotionController::showAll');

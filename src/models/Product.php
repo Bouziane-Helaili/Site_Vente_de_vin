@@ -10,16 +10,17 @@ class Product extends Model
     private int $id;
     private string $name;
     private string $description;
-    // private float $note; //float ?
+    private float $note; //float ?
     private string $photo;
     private int $stock;
     private float $alcohol_percentage;
     private int $id_region;
-    // private int $id_cepage;
-    // private int $id_taste;
-    // private int $id_association;
-    // private int $id_comment;
+    private int $id_cepage;
+    private int $id_taste;
+    private int $id_association;
+    private int $id_comment;
     private int $id_type;
+    private float $price;
     protected string $table_name = "product";
 
 
@@ -270,6 +271,26 @@ class Product extends Model
     }
 
     /**
+     * Get the value of price
+     * @return float
+     */
+    public function getPrice(): float
+    {
+        return $this->price;
+    }
+
+    /**
+     * Set the value of price
+     * @param float $price
+     *
+     * @return void
+     */
+    public function setPrice(float $price): void
+    {
+        $this->price = $price;
+    }
+
+    /**
      * Set the value of id_type
      * @param int $id_type
      * @return void
@@ -284,18 +305,20 @@ class Product extends Model
      */
     public function insert(): int|false
     {
-        $stmt = $this->pdo->prepare("INSERT INTO product (`name`,`description`, `photo`,`stock`,`alcohol_percentage`) VALUES (:name,:description, :photo,:stock,:alcohol_percentage)");
+        $stmt = $this->pdo->prepare("INSERT INTO product (`name`,`description`,`stock`,`alcohol_percentage`,`id_region`,`id_cepage`,`id_taste`,`id_association`,`id_type`,`price`) VALUES (:name,:description,:stock,:alcohol_percentage,:id_region,:id_cepage,:id_taste,:id_association,:id_type,:price)");
 
         $stmt->execute([
             "name" => $this->name,
             "description" => $this->description,
-            "photo" => $this->photo,
+            // "photo" => $this->photo,
             "stock" => $this->stock,
             "alcohol_percentage" => $this->alcohol_percentage,
-            // "id_region" => $this->id_region,
-            // "id_cepage" => $this->cepage,
-            // "id_taste" => $this->id_taste,
-            // "id_association" => $this->id_association,
+            "id_region" => $this->id_region,
+            "id_cepage" => $this->id_cepage,
+            "id_taste" => $this->id_taste,
+            "id_association" => $this->id_association,
+            "id_type" => $this->id_type,
+            "price" => $this->price
 
         ]);
         return $this->pdo->lastInsertId();

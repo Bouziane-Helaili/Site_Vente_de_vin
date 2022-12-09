@@ -7,7 +7,7 @@ abstract class Model
     protected \PDO $pdo;
 
     protected string $table_name;
-    protected string $region = 'region ON product.id_region=region.id';
+    protected string $regionJoin = 'region ON product.id_region=region.id';
     protected string $cepage = 'cepage ON product.id_cepage=cepage.id';
     protected string $association = 'association ON product.id_association=association.id';
     protected string $type_product = 'type_product ON product.id_type=type_product.id_type';
@@ -40,17 +40,28 @@ abstract class Model
     /**
      * get all elements
      * @param boolean $is_array s'il est à true on aura les résultats sous format d'un tableau associatif, si non c'est le format du model
-     * @return array|false
+     * @return array
      */
-
-
     public function findAll(): array
     {
-
         $stmt = $this->pdo->prepare(
-            "SELECT * FROM {$this->table_name} JOIN {$this->region}"
+            "SELECT * FROM {$this->table_name}"
+
         );
         $stmt->setFetchMode(\PDO::FETCH_ASSOC);
+
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    public function findAllProduct(): array
+    {
+        $stmt = $this->pdo->prepare(
+            "SELECT * FROM {$this->table_name} JOIN {$this->regionJoin} JOIN {$this->cepage} JOIN {$this->association} JOIN {$this->type_product} JOIN {$this->taste}"
+
+        );
+        $stmt->setFetchMode(\PDO::FETCH_ASSOC);
+
         $stmt->execute();
         return $stmt->fetchAll();
     }
@@ -62,7 +73,7 @@ abstract class Model
      */
     public function delete(int $id): void
     {
-        $stmt = $this->pdo->prepare("DELETE FROM {$this->table_name} WHERE id = :id JOIN ");
+        $stmt = $this->pdo->prepare("DELETE FROM {$this->table_name} WHERE id = :id ");
         $stmt->bindParam(':id', $id);
         $stmt->execute();
     }
@@ -73,7 +84,7 @@ abstract class Model
      * @param boolean $is_array s'il est à true on aura les résultats sous format d'un tableau associatif, si non c'est le format du model
      * @return array|false
      */
-    public function findAllBy(array $criteria, bool $is_array = false): array|false
+    public function findAllBy(array $criteria,): array
     {
         if (empty($criteria)) {
             throw  new \Exception("Il faut passer au moins un critère");
@@ -91,10 +102,30 @@ abstract class Model
 
         $stmt = $this->pdo->prepare($sql_query);
 
-        if ($is_array)
-            $stmt->setFetchMode(\PDO::FETCH_ASSOC);
-        else
-            $stmt->setFetchMode(\PDO::FETCH_CLASS, get_called_class());
+        $stmt->setFetchMode(\PDO::FETCH_ASSOC);
+        $stmt->execute($criteria);
+        return $stmt->fetchAll();
+    }
+
+    public function findAllProductBy(array $criteria,): array
+    {
+        if (empty($criteria)) {
+            throw  new \Exception("Il faut passer au moins un critère");
+        }
+
+        $sql_query = "SELECT * FROM {$this->table_name} JOIN {$this->regionJoin} JOIN {$this->cepage} JOIN {$this->association}  JOIN {$this->taste}  WHERE ";
+        $count = 0;
+        foreach ($criteria as $key => $value) {
+            $count++;
+            if ($count > 1) {
+                $sql_query .= " AND ";
+            }
+            $sql_query .= " $key = :$key ";
+        }
+
+        $stmt = $this->pdo->prepare($sql_query);
+
+        $stmt->setFetchMode(\PDO::FETCH_ASSOC);
         $stmt->execute($criteria);
         return $stmt->fetchAll();
     }
@@ -125,11 +156,42 @@ abstract class Model
         foreach ($criteria as $key => $value) {
             $stmt->bindParam(":$key", $value);
         }
-        if ($is_array)
-            $stmt->setFetchMode(\PDO::FETCH_ASSOC);
-        else
-            $stmt->setFetchMode(\PDO::FETCH_CLASS, get_called_class());
+        // if ($is_array)
+        $stmt->setFetchMode(\PDO::FETCH_ASSOC);
+        // else
+        //     $stmt->setFetchMode(\PDO::FETCH_CLASS, get_called_class());
+
         $stmt->execute();
         return $stmt->fetch();
+    }
+
+    public function edit(int $to_edit)
+    {
+
+        $stmt = $this->pdo->prepare("UPDATE product SET `name` = :new_name, `description` = :new_description, `stock` = :new_stock,`alcohol_percentage` = :new_alcohol_percentage, `id_region`= :new_id_region,`id_cepage`=:new_id_cepage, `id_taste`=:new_id_taste, `id_association`=:new_id_association,`id_type`=:new_id_type,`price`=:new_price WHERE id = :id");
+
+        $stmt->execute(array(
+            'new_name' => $_POST['name'],
+            'new_description' => $_POST['description'],
+            // 'new_photo'=>$_POST['photo'],
+            'new_stock' => $_POST['stock'],
+            'new_alcohol_percentage' => $_POST['alcohol_percentage'],
+            'new_id_region' => $_POST['id_region'],
+            'new_id_cepage' => $_POST['id_cepage'],
+            'new_id_taste' => $_POST['id_taste'],
+            'new_id_association' => $_POST['id_association'],
+            'new_id_type' => $_POST['id_type'],
+            'new_price' => $_POST['price'],
+            'id' => $to_edit
+        ));
+
+
+        $stmt->setFetchMode(\PDO::FETCH_ASSOC);
+        return $stmt->fetch();
+
+        $stmt = $this->pdo->prepare("SELECT * FROM product WHERE id = :id");
+        $stmt->execute([
+            'id' => $to_edit
+        ]);
     }
 }
