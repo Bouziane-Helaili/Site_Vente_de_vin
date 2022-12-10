@@ -9,10 +9,15 @@ class HomeController extends Controller
 {
 
 
-    public function show(): void
+
+    public function showLast()
     {
+        $product = new Product();
 
-
-        $this->renderView('home/index');
+        $lastWhiteWine = $product->findLastBy(['id_type' => 1]);
+        $lastRedWine = $product->findLastBy(['id_type' => 2]);
+        $lastChampagne = $product->findLastBy(['id_type' => 3]);
+        $lastBox = $product->findLastBy(['id_type' => 4]);
+        $this->renderView('home/index', compact('lastWhiteWine', 'lastRedWine', 'lastChampagne', 'lastBox'));
     }
 }
