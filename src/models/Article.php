@@ -1,22 +1,25 @@
 <?php
 
-class Article
+namespace App\Models;
+
+use Core\Model;
+
+class Article extends Model
 {
 
     private int $id;
     private string $title;
     private string $content;
     private string $date;
+    private string $photo_article;
     private int $id_user;
+    protected string $table_name = "article";
 
     // accesseurs (getters & setters)
-
     /**
-     * Permet de récupérer l'identifiant de l'article
-     *
+     * Get the value of id
      * @return int
      */
-
     public function getId(): int
     {
         return $this->id;
@@ -33,8 +36,8 @@ class Article
 
     /**
      * Set the value of title
-     * @param string $title
-     * @return void
+     *  @param string $title
+     * @return  void
      */
     public function setTitle(string $title): void
     {
@@ -53,7 +56,7 @@ class Article
     /**
      * Set the value of content
      * @param string $content
-     * @return void
+     * @return  void
      */
     public function setContent(string $content): void
     {
@@ -72,15 +75,35 @@ class Article
     /**
      * Set the value of date
      * @param string $date
-     * @return void
+     * @return  self
      */
     public function setDate(string $date): void
     {
         $this->date = $date;
     }
+
+    /**
+     * Get the value of photo_article
+     * @return string
+     */
+    public function getPhoto_article(): string
+    {
+        return $this->photo_article;
+    }
+
+    /**
+     * Set the value of photo_article
+     * @param string $photo_article
+     * @return  void
+     */
+    public function setPhoto_article(string $photo_article): void
+    {
+        $this->photo_article = $photo_article;
+    }
+
     /**
      * Get the value of id_user
-     * @return string
+     * @return int
      */
     public function getId_user(): int
     {
@@ -90,10 +113,59 @@ class Article
     /**
      * Set the value of id_user
      * @param int $id_user
+     *
      * @return  void
      */
     public function setId_user(int $id_user): void
     {
         $this->id_user = $id_user;
+    }
+
+
+
+    public function insertArticle(): int|false
+    {
+        $stmt = $this->pdo->prepare("INSERT INTO `article` (`title`, `content`, `photo_article`) VALUES (:title, :content,:photo_article)");
+
+        $stmt->execute([
+            "title" => $this->title,
+            "content" => $this->content,
+            "photo_article" => $this->photo_article,
+        ]);
+
+
+        return $this->pdo->lastInsertId();
+    }
+
+    public function editArticleBlog(int $article_to_edit)
+    {
+
+        $stmt = $this->pdo->prepare("UPDATE article SET `title` = :new_title, `content` = :new_content,`photo_article`= :new_photo_article WHERE id = :id");
+
+        $stmt->execute(array(
+            'new_title' => $_POST['title'],
+            'new_content' => $_POST['content'],
+            'new_photo_article' => $_FILES['image']['name'],
+            'id' => $article_to_edit
+        ));
+
+        $stmt = $this->pdo->prepare("SELECT * FROM article WHERE id = :id");
+        $stmt->execute([
+            'id' => $article_to_edit
+        ]);
+        $stmt->setFetchMode(\PDO::FETCH_ASSOC);
+        return $stmt->fetch();
+    }
+    public function findLast(): object|array|false
+    {
+           $stmt = $this->pdo->prepare("SELECT * FROM {$this->table_name} ORDER BY article.id DESC LIMIT 1");
+           
+        // if ($is_array)
+        $stmt->setFetchMode(\PDO::FETCH_ASSOC);
+        // else
+        //     $stmt->setFetchMode(\PDO::FETCH_CLASS, get_called_class());
+
+        $stmt->execute();
+        return $stmt->fetch();
     }
 }

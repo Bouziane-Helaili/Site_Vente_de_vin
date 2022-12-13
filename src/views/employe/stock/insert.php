@@ -7,7 +7,8 @@
 
 <?php endif; ?>
 <a class='btn btn-success' href=" <?= BASE_DIR ?>/employe/stock">Index</a>
-<form method="post" action="<?= BASE_DIR ?>/employe/stock/insert" enctype="multipart/form-data">
+<form method="POST" action="<?= BASE_DIR ?>/employe/stock/insert" enctype="multipart/form-data">
+
     <div>
         <label for="name">Nom</label>
         <input type="text" name="name" id="name">
@@ -73,10 +74,15 @@
         <label for="price">Prix</label>
         <input type="number" name="price" id="price">
     </div>
-    <div>
-        <input type="submit" name="submit" value="Enregistrer">
+<div>
+   
+    <div class="form-check">
+      <input class="form-check-input" name='is_featured' type="checkbox" value="1" id="is_featured">
+      <label class="form-check-label" for="is_featured">
+      Mettre en vedette
+      </label>
     </div>
-
+</div>
     <div>Ajouter photo vin:
         <label for="image_browser">
             <img src="<?php $image ?>">
@@ -86,6 +92,11 @@
         <br>
         <small class="file_info text-muted"></small>
     </div>
+    <div>
+        <!-- <input type="submit" name="submit" value="Enregistrer"> -->
+        <button type="submit" name="submit">Enregistrer</button>
+    </div>
+
 
 </form>
 

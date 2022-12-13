@@ -12,6 +12,8 @@ class UserController extends Controller
     public function login()
     {
 
+        $_SESSION['last_page'] = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'index.php';
+
         $errors = null;
 
         echo "ceci est la méthode login";
@@ -19,17 +21,8 @@ class UserController extends Controller
         CheckLog::checkIsNotLogged();
 
         if (isset($_POST['submit']) && !empty($_POST['email']) && !empty($_POST['password'])) {
-
-
-
-
             $email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
-
-
-
             $user = UserController::findOneByEmail($email);
-
-
             if (!$user) {
                 $_SESSION['errors'][] = "nous n'avons pas un compte avec cette adresse";
             } else {
@@ -37,16 +30,20 @@ class UserController extends Controller
                     $_SESSION['user'] = [
                         'is_logged' => TRUE,
                         'email' => $user->email,
-                        'id' => $user->id
+                        'id' => $user->id,
+                        "is_employee" => $user->is_employee,
+                        "is_admin" => $user->is_admin
                     ];
 
-                    header('Location: /best-wines');
+                    
+                    header('Location: ' . $_SESSION['last_page']);
                     exit;
                 } else {
+                    
                     $_SESSION['errors'][] = "Le mot de passe est erroné";
                 }
             }
-         }// else {
+        } // else {
         //     // $_SESSION['errors'][] = "Tous les champs sont obligatoires";
         // }
         $errors = CheckLog::errors();
@@ -63,12 +60,11 @@ class UserController extends Controller
     public function logout()
     {
         if (!empty($_SESSION['user']['is_logged'])) {
-            CheckLog::destroySession();
-            echo "Bye";
+            CheckLog::logoutUser();
+            header('Location: /best-wines');
         } else {
             echo "Vous n'êtes même pas connecté ! ";
         }
-        $this->renderView('user/logout');
     }
 
 
@@ -101,7 +97,7 @@ class UserController extends Controller
     public static function findOneByEmail(string $email): object|array|false
     {
         $user_to_find = new User();
-        $user = $user_to_find->findOneUserBy(['email' => $email]);
+        $user = $user_to_find->findOneItemBy(['email' => $email]);
 
         return $user;
     }

@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mer. 07 déc. 2022 à 12:21
--- Version du serveur : 10.4.27-MariaDB
--- Version de PHP : 8.0.25
+-- Généré le : mar. 13 déc. 2022 à 12:02
+-- Version du serveur : 10.4.24-MariaDB
+-- Version de PHP : 8.0.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -31,9 +31,17 @@ CREATE TABLE `article` (
   `id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `content` text NOT NULL,
-  `date` datetime NOT NULL DEFAULT current_timestamp(),
-  `id_user` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `date` datetime DEFAULT NULL,
+  `id_user` int(11) DEFAULT NULL,
+  `photo_article` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `article`
+--
+
+INSERT INTO `article` (`id`, `title`, `content`, `date`, `id_user`, `photo_article`) VALUES
+(1, 'je me r&eacute;gale', '<p>jkgdigpkhv lbajpvckbkjkcvqkvcqshqv</p>', NULL, NULL, 'vin (242).png');
 
 -- --------------------------------------------------------
 
@@ -44,7 +52,7 @@ CREATE TABLE `article` (
 CREATE TABLE `association` (
   `id` int(11) NOT NULL,
   `association_name` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `association`
@@ -66,7 +74,7 @@ INSERT INTO `association` (`id`, `association_name`) VALUES
 CREATE TABLE `cepage` (
   `id` int(11) NOT NULL,
   `cepage_name` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `cepage`
@@ -98,7 +106,7 @@ CREATE TABLE `comment` (
   `text_comment` text NOT NULL,
   `id_product` int(11) NOT NULL,
   `id_sale` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -112,7 +120,7 @@ CREATE TABLE `invoice` (
   `total_price` float NOT NULL,
   `id_sale` int(11) NOT NULL,
   `id_promotion` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -124,7 +132,7 @@ CREATE TABLE `order_tracking` (
   `id` int(11) NOT NULL,
   `order_state` varchar(255) NOT NULL,
   `id_receipt` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -146,21 +154,23 @@ CREATE TABLE `product` (
   `id_association` int(11) DEFAULT NULL,
   `id_comment` int(11) DEFAULT NULL,
   `id_type` int(11) NOT NULL,
-  `price` float NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `price` float NOT NULL,
+  `is_featured` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `product`
 --
 
-INSERT INTO `product` (`id`, `name`, `description`, `note_final`, `photo`, `stock`, `alcohol_percentage`, `id_region`, `id_cepage`, `id_taste`, `id_association`, `id_comment`, `id_type`, `price`) VALUES
-(10001, '1er vin', 'Ceci est notre premier vin', NULL, 'files/vin1.jpg', 40, 20, 5, 4, 4, 4, NULL, 4, 15),
-(10003, '1er vin rouge', '1er vin rouge ajouté', NULL, 'img/rouge1', 20, 12, 10, 9, 2, 3, NULL, 2, 12),
-(10004, '2eme vin rouge', '2eme vin rouge ajouté', NULL, 'img/vinrouge2', 1, 15, 11, 10, 2, 2, NULL, 2, 8),
-(10005, '1er vin blanc', '1er vin blanc ajouté', NULL, 'img/vinblanc1', 456, 18, 1, 11, 6, 5, NULL, 1, 18),
-(10006, '2eme vin blanc', '2eme vin blanc ajouté', NULL, 'img/vinblanc2', 5, 12, 5, 6, 5, 3, NULL, 1, 9.99),
-(10007, '1er champagne', '1er champagne ajouté', NULL, 'img/champ1', 50, 16, 2, 1, 3, 5, NULL, 3, 16),
-(10008, '2eme champagne', '2eme champagne ajouté', NULL, 'img/champ2', 900, 12.5, 9, 11, 5, 2, NULL, 3, 11.99);
+INSERT INTO `product` (`id`, `name`, `description`, `note_final`, `photo`, `stock`, `alcohol_percentage`, `id_region`, `id_cepage`, `id_taste`, `id_association`, `id_comment`, `id_type`, `price`, `is_featured`) VALUES
+(10008, '2eme champagne ajoutÃ©', '2eme champagne ajoutÃ©', NULL, 'vin (296).png', 500, 16.5, 9, 11, 5, 2, NULL, 3, 15.99, 1),
+(10009, '15', '15', NULL, 'vin (271).png', 15, 15, 1, 1, 1, 1, NULL, 2, 15, 1),
+(10010, 'test vin blanc', 'test vin blanc', NULL, 'vin (265).png', 12, 12, 1, 1, 1, 1, NULL, 1, 12, 1),
+(10011, 'Ceci est un test', 'test', NULL, 'vin (353).png', 12, 12, 1, 1, 1, 1, NULL, 2, 12, NULL),
+(10013, 'test123456789', '123654654', NULL, 'vin (315).png', 12, 12, 3, 1, 1, 1, NULL, 4, 12, 1),
+(10014, 'TEst 123', 'TEST11234564', NULL, 'vin (271).png', 15, 15, 1, 1, 1, 1, NULL, 2, 15, NULL),
+(10015, 'vin ', '1er vin rouge ajouté 1003', NULL, 'vin (234).png', 1, 1, 1, 1, 1, 1, NULL, 1, 12, NULL),
+(10016, '1er vin de Pierre', 'tuerie', NULL, 'vin (340).png', 1, 40, 11, 2, 2, 1, NULL, 1, 10, NULL);
 
 -- --------------------------------------------------------
 
@@ -174,7 +184,7 @@ CREATE TABLE `promotion` (
   `start_date` date NOT NULL,
   `end_date` date NOT NULL,
   `percentage` float NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -185,7 +195,7 @@ CREATE TABLE `promotion` (
 CREATE TABLE `region` (
   `id` int(11) NOT NULL,
   `region_name` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `region`
@@ -215,10 +225,32 @@ INSERT INTO `region` (`id`, `region_name`) VALUES
 CREATE TABLE `sale` (
   `id` int(11) NOT NULL,
   `id_product` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
-  `quantity_sold` int(11) NOT NULL,
-  `price_total_product` float NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `id_user` int(11) DEFAULT NULL,
+  `quantity` int(11) NOT NULL,
+  `price_total_product` float DEFAULT NULL,
+  `quantity_total_sold` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `supplier`
+--
+
+CREATE TABLE `supplier` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `content` text NOT NULL,
+  `image_supp` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `supplier`
+--
+
+INSERT INTO `supplier` (`id`, `name`, `content`, `image_supp`) VALUES
+(1, 'heineken', '<p>concurrent</p>', 'vin (254).png'),
+(2, '', '', '');
 
 -- --------------------------------------------------------
 
@@ -229,7 +261,7 @@ CREATE TABLE `sale` (
 CREATE TABLE `taste` (
   `id` int(11) NOT NULL,
   `taste_name` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `taste`
@@ -252,17 +284,17 @@ INSERT INTO `taste` (`id`, `taste_name`) VALUES
 CREATE TABLE `type_product` (
   `id_type` int(11) NOT NULL,
   `type_name` varchar(250) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `type_product`
 --
 
 INSERT INTO `type_product` (`id_type`, `type_name`) VALUES
-(1, 'white'),
-(2, 'red'),
-(3, 'champagne'),
-(4, 'box');
+(1, 'Blanc'),
+(2, 'Rouge'),
+(3, 'Champagne'),
+(4, 'Coffrets');
 
 -- --------------------------------------------------------
 
@@ -276,14 +308,21 @@ CREATE TABLE `user` (
   `password` varchar(255) NOT NULL,
   `is_admin` tinyint(1) NOT NULL DEFAULT 0,
   `is_employee` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `user`
 --
 
 INSERT INTO `user` (`id`, `email`, `password`, `is_admin`, `is_employee`) VALUES
-(1, 'test123@test123.Fr', '$argon2id$v=19$m=65536,t=4,p=1$ZU1KdVEyVkdkMFdzTmhDVg$o0ErI4Vljtp4/yrQp3GJ6VTw1VdYlusXT9J+I2wlFRY', 0, 0);
+(2, 'jdousse@gmail.com', '$argon2id$v=19$m=65536,t=4,p=1$ZXJJV2gweGdURUY4MUFBcg$82Dw9icknwf6FI1e1Jev9RddhaafJuy5AHfDrpIbA2Y', 0, 1),
+(3, 'bouziane@hotmail.fr', '123', 1, 1),
+(4, 'afpa@hotmail.fr', '123', 1, 0),
+(18, 'afpa@afpa.fr', '$argon2id$v=19$m=65536,t=4,p=1$ejV0ZVJrUTBYeWk2QWgwSw$qvV/FZK4a8C95gfm1fEPlBem4T/fjXxg3tlawUymUrc', 1, 1),
+(21, 'afpa@afpa.fr', '$argon2id$v=19$m=65536,t=4,p=1$elBDaWZQWmhlWks3YndLYw$KnGheqNLRuqxXsZulh8qBtQm71FSw0HcHMkYgwIMk1c', 1, 1),
+(27, 'julien@hotmail.fr', '$argon2id$v=19$m=65536,t=4,p=1$OGkydkxhOE1YajZpQnNkQw$St+wKD7VyYIr4oQPJT58zDsc14tcVHDuN1I/iK0WyuA', 0, 0),
+(28, '', '$argon2id$v=19$m=65536,t=4,p=1$LjJXWndnRnhoMW1nRHRJWQ$GhqjKYdWcQjcf+ITb2ZqQCeWhr0Xrx2ULMsFUeW9BbY', 0, 0),
+(29, '', '$argon2id$v=19$m=65536,t=4,p=1$NFlDYnhFSkRtMWZjT2NmeA$rlvswvMuqoU2cn4EEPgDjDX2x1NQhN27KkYKsfulgao', 0, 0);
 
 --
 -- Index pour les tables déchargées
@@ -364,6 +403,12 @@ ALTER TABLE `sale`
   ADD KEY `id_user` (`id_user`);
 
 --
+-- Index pour la table `supplier`
+--
+ALTER TABLE `supplier`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Index pour la table `taste`
 --
 ALTER TABLE `taste`
@@ -389,7 +434,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT pour la table `article`
 --
 ALTER TABLE `article`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `association`
@@ -425,7 +470,7 @@ ALTER TABLE `order_tracking`
 -- AUTO_INCREMENT pour la table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10009;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10017;
 
 --
 -- AUTO_INCREMENT pour la table `promotion`
@@ -443,7 +488,13 @@ ALTER TABLE `region`
 -- AUTO_INCREMENT pour la table `sale`
 --
 ALTER TABLE `sale`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT pour la table `supplier`
+--
+ALTER TABLE `supplier`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pour la table `taste`
@@ -455,13 +506,13 @@ ALTER TABLE `taste`
 -- AUTO_INCREMENT pour la table `type_product`
 --
 ALTER TABLE `type_product`
-  MODIFY `id_type` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_type` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- Contraintes pour les tables déchargées

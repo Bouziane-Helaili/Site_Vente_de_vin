@@ -16,10 +16,17 @@ Router::register('/nos-vins/nos-champagnes', 'ProductController::showAllChampagn
 Router::register('/nos-vins/detail', 'ProductController::showOne');
 
 //product cart
-Router::register('/cart', 'CartController::addProduct');
+Router::register('/cart', 'CartController::index');
+Router::register('/cart/add', 'CartController::addProduct');
+Router::register('/cart/remove', 'CartController::removeProduct');
+Router::register('/cart/empty', 'CartController::emptyCart');
+
 
 // Fournisseur 
 Router::register('/nos-fournisseurs', 'SupplierController::showFournisseur');
+Router::register('/nos-fournisseurs/details', 'SupplierController::showOne');
+Router::register('/nos-fournisseurs/insert', 'SupplierController::insertSupplier');
+Router::register('/nos-fournisseurs/edit', 'SupplierController::EditSupplier');
 
 // Qui-sommes-nous
 Router::register('/nous-contacter', 'PresentationController::showContact');
@@ -32,6 +39,7 @@ Router::register('/qui-sommes-nous', 'PresentationController::showAboutUS');
 Router::register('/blog', 'BlogController::showArticle');
 Router::register('/blog/insert', 'BlogController::insertArticle');
 Router::register('/blog/edit', 'BlogController::editArticle');
+Router::register('/blog/details', 'BlogController::detailArticle');
 
 // user
 Router::register('/login', 'UserController::login');
@@ -40,7 +48,7 @@ Router::register('/logout', 'UserController::logout');
 Router::register('/region', 'StockController::showAllRegion');
 
 // Accueil espace employé
-Router::register('/employe', 'EmployeeController::index');
+Router::register('/employe', 'StockController::index');
 
 // espace employé Commandes
 Router::register('/employe/commandes', 'OrderTrackingController::showAll');
@@ -48,6 +56,7 @@ Router::register('/employe/commandes/details', 'OrderTrackingController::showOne
 
 // Gestion des paiements
 Router::register('/employe/paiements', 'PaiementsController::index');
+Router::register('/pay', 'PayController::index');
 
 // Gestion des stocks
 Router::register('/employe/stock', 'StockController::showAll');
@@ -62,8 +71,9 @@ Router::register('/employe/promotion/edit', 'PromotionController::edit');
 
 // Gestion des salariés
 Router::register('/administrateur', 'AdminController::showAll');
-Router::register('/administrateur/insert', 'AdminController::insert');
+Router::register('/administrateur/insert', 'AdminController::insertEmployee');
 Router::register('/administrateur/edit', 'AdminController::edit');
+Router::register('/administrateur/delete', 'AdminController::delete');
 
 // A rajouter & | à modifier
 //

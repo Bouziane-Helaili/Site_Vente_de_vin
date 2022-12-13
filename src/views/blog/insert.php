@@ -1,13 +1,21 @@
 <div>Ceci est la page du blog pour insérer un article</div>
+<?php if (isset($message)) : ?>
+    <div>
+        <span><?= $message ?></span>
+    </div>
+
+<?php endif; ?>
 
 <!-- Create the editor container -->
-<form action="" method="POST">
-    <input type="text" name="title" placeholder="Titre"></input>
-    <div id="editor" name="content">
-        <p>Hello World!</p>
-        <p>Some initial <strong>bold</strong> text</p>
-        <p><br /></p>
+<form method="POST" action="<?= BASE_DIR ?>/blog/insert" enctype="multipart/form-data">
+    <div>
+        <label for="titre">Titre</label>
+        <input type="text" name="title" id="title">
     </div>
+    <label for="content">Votre Article</label>
+    <textarea id="mytextarea" name="content"></textarea>
+
+
     <div>Ajouter une photo:
         <label for="image_browser">
             <img src="<?php $image ?>">
@@ -17,26 +25,12 @@
         <br>
         <small class="file_info text-muted"></small>
     </div>
-    <button type=" submit">Enregister l'article</button>
+    <input type="submit" name="submit" value="Enregistrer">
 </form>
-
-<!-- Include the Quill library -->
-<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-
-<!-- Initialize Quill editor -->
+<script src="../../../best-wines/node_modules/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
-    var quill = new Quill('#editor', {
-        modules: {
-            toolbar: [
-                [{
-                    header: [1, 2, false]
-                }],
-                ['bold', 'italic', 'underline'],
-                ['image', 'code-block']
-            ]
-        },
-        placeholder: 'Ecrivez votre article',
-        theme: 'snow'
+    tinymce.init({
+        selector: '#mytextarea'
     });
 
     function display_image_name(file_name) {

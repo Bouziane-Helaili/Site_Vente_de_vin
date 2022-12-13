@@ -10,11 +10,16 @@ use App\Models\Cepage;
 use App\Models\Taste;
 use App\Models\Association;
 use App\Models\TypeProduct;
+use Core\Partials\CheckLog;
 
 class StockController extends Controller
 {
+
+    
     public function showAll()
     {
+
+        CheckLog::checkIsEmployee();
 
         $product = new Product();
 
@@ -31,6 +36,9 @@ class StockController extends Controller
 
     public function insert()
     {
+
+        CheckLog::checkIsEmployee();
+
         $region = new Region();
         $regions = $region->findAll();
 
@@ -64,9 +72,7 @@ class StockController extends Controller
             $product->setId_type($_POST['id_type']);
             $product->setPrice($_POST['price']);
             $product->setPhoto($_FILES['image']['name']);
-
-
-
+            $product->setIsFeatured($_POST['is_featured']);
 
             if (count($_FILES) > 0) {
                 $allowed[] = "image/jpeg";
@@ -95,16 +101,16 @@ class StockController extends Controller
                 'message' => $message
             ]);
         }
-        $this->renderView('employe/stock/insert');
+        $this->renderView('employe/stock/insert', compact('message', 'regions', 'cepages', 'tastes', 'associations', 'type_products'));
     }
 
     public function edit()
     {
+        CheckLog::checkIsEmployee();
         $id = $_GET['id'];
 
         $to_edit = new Product;
-        $to_edit->findOneBy(['id' => $id]);
-        $edit_temp = $to_edit->findOneBy(['id' => $id]);
+        $edit_temp = $to_edit->findOneForEdit(['id' => $id]);
 
         $region = new Region();
         $regions = $region->findAll();
@@ -147,8 +153,8 @@ class StockController extends Controller
             } else {
                 $message =  "échec de l'édit";
             };
-            $to_edit->findOneBy(['id' => $id]);
-            $edit_temp = $to_edit->findOneBy(['id' => $id]);
+            $to_edit->findOneForEdit(['id' => $id]);
+            $edit_temp = $to_edit->findOneForEdit(['id' => $id]);
             $this->renderView(
                 'employe/stock/edit',
                 compact('message', 'id', 'edit_temp', 'regions', 'cepages', 'tastes', 'associations', 'type_products')
@@ -160,6 +166,7 @@ class StockController extends Controller
 
     public function delete()
     {
+        CheckLog::checkIsEmployee();
         $id = $_GET['id'];
         $to_delete = new Product;
         $to_delete->delete($id);
@@ -168,9 +175,17 @@ class StockController extends Controller
 
     public function showAllRegion()
     {
+        CheckLog::checkIsEmployee();
 
         $region = new Region();
         $regions = $region->findAll();
         $this->renderView('employe/stock/insert', compact('regions'));
+    }
+
+    public function index()
+    {
+        CheckLog::checkIsEmployee();
+
+        $this->renderView('employe/index');
     }
 }
