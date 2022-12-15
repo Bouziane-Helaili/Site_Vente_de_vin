@@ -1,8 +1,9 @@
-<div>Ceci est la page insert du stock</div>
-
 <?php if (isset($message)) : ?>
     <div>
-        <span><?= $message ?></span>
+        <p class="text-center"><?= $message ?></p>
+        <div class="text-center">
+            <a href="<?= BASE_DIR ?>/employe/stock" class="btn btn-warning">Retourner à l'index </a>
+        </div>
     </div>
 
 <?php endif; ?>
@@ -72,17 +73,17 @@
     </div>
     <div>
         <label for="price">Prix</label>
-        <input type="number" name="price" id="price">
+        <input type="text" name="price" id="price">
     </div>
-<div>
-   
+    <p>Mettre en vedette :</p>
     <div class="form-check">
-      <input class="form-check-input" name='is_featured' type="checkbox" value="1" id="is_featured">
-      <label class="form-check-label" for="is_featured">
-      Mettre en vedette
-      </label>
+
+        <label class="form-check-label" for="is_featured">Non</label> <input class="form-check-input" name="is_featured" id="is_featured" type="radio" value="0" aria-label="Non">
     </div>
-</div>
+    <div class="form-check">
+        <label class="form-check-label" for="is_featured">Oui</label> <input class="form-check-input" name="is_featured" id="is_featured" type="radio" value="1" aria-label="Oui">
+
+    </div>
     <div>Ajouter photo vin:
         <label for="image_browser">
             <img src="<?php $image ?>">
@@ -93,8 +94,8 @@
         <small class="file_info text-muted"></small>
     </div>
     <div>
-        <!-- <input type="submit" name="submit" value="Enregistrer"> -->
-        <button type="submit" name="submit">Enregistrer</button>
+        <input type="submit" name="submit" value="Enregistrer">
+        <!-- <button type="submit" name="submit">Enregistrer</button> -->
     </div>
 
 

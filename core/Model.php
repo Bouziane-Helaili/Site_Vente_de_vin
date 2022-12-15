@@ -259,6 +259,9 @@ abstract class Model
         $stmt->execute();
         return $stmt->fetch();
     }
+
+    
+
     public function edit(int $to_edit)
     {
 

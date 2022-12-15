@@ -28,8 +28,11 @@
 
 #dropdown-nav:hover #dropdown-nav-content {display: block;}
 
-
-
+.card-bw {
+	
+	max-height: 250px !important;
+	max-width: 250px !important;
+}
 
 body {
 	font-family: Arial;
@@ -179,4 +182,8 @@ min-height: 300px;
 	background-color: #9e121b !important;
 	color:#FFF;
 	border-color: #9e121b;
+}
+
+.result p {
+	color: black;
 }

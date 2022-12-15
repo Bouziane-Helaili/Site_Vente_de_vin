@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="https://cdn.quilljs.com/1.3.6/quill.snow.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+
 
 
     <title>Best wines</title>
@@ -42,30 +44,30 @@
                                     <li class="dropdown-item-log">
                                         <a class="nav-link" href="<?= BASE_DIR ?>/logout">Se déconnecter</a>
                                     </li>
-                                    <?php else : ?>
-                                        <li class="dropdown-item-log">
-                                            <a class="nav-link" href="<?= BASE_DIR ?>/login">Se connecter</a>
-                                        </li>
-                                        <hr class="dropdown-divider">
-                                        <li class="dropdown-item-log">
-                                            <a class="nav-link" href="<?= BASE_DIR ?>/register">S'enregistrer</a>
-                                        </li>
-                                        <?php endif ?>
-                                       
-                                    </ul>
-                                </li>
-                                <?php if (isset($_SESSION['user']['is_admin']) && $_SESSION['user']['is_admin']) : ?>
-                                    <li class="nav-item dropdown">
-                            <a class="nav-link" href="<?= BASE_DIR ?>/employe" role="button">
-                                Espace administrateur
-                            </a>
+                                <?php else : ?>
+                                    <li class="dropdown-item-log">
+                                        <a class="nav-link" href="<?= BASE_DIR ?>/login">Se connecter</a>
+                                    </li>
+                                    <hr class="dropdown-divider">
+                                    <li class="dropdown-item-log">
+                                        <a class="nav-link" href="<?= BASE_DIR ?>/register">S'enregistrer</a>
+                                    </li>
+                                <?php endif ?>
+
+                            </ul>
                         </li>
+                        <?php if (isset($_SESSION['user']['is_admin']) && $_SESSION['user']['is_admin']) : ?>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link" href="<?= BASE_DIR ?>/employe" role="button">
+                                    Espace administrateur
+                                </a>
+                            </li>
                         <?php elseif (isset($_SESSION['user']['is_employee']) && $_SESSION['user']['is_employee']) : ?>
-                                <li class="nav-item dropdown">
-                            <a class="nav-link" href="<?= BASE_DIR ?>/employe" role="button">
-                                Espace employé
-                            </a>
-                        </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link" href="<?= BASE_DIR ?>/employe" role="button">
+                                    Espace employé
+                                </a>
+                            </li>
                         <?php endif ?>
                     </ul>
                 </div>
@@ -137,6 +139,8 @@
 
     <!-- Footer -->
     <footer class="text-center text-lg-star footer p-1">
+        <h3>L'ABUS D'ALCOOL EST DANGEREUX POUR LA SANTÉ, À CONSOMMER AVEC MODÉRATION.</h3>
+        <img src="<?= BASE_DIR ?>/assets/img/bandeau_boissons_alcooliques" alt="" srcset="">
         <!-- Section: Links  -->
         <section class="">
             <div class="container text-center text-md-start mt-2">
@@ -204,16 +208,16 @@
                             Aide
                         </h6>
                         <p>
-                            <a href="faq" class="text-reset">FAQ</a>
+                            <a href="<?= BASE_DIR ?>/faq" class="text-reset">FAQ</a>
                         </p>
                         <p>
-                            <a href="mentionLegal" class="text-reset">Mentions légales</a>
+                            <a href="<?= BASE_DIR ?>/mentions-legales" class="text-reset">Mentions légales</a>
                         </p>
                         <p>
-                            <a href="presse" class="text-reset">Presse</a>
+                            <a href="<?= BASE_DIR ?>/presse" class="text-reset">Presse</a>
                         </p>
                         <p>
-                            <a href="#!" class="text-reset">Politique de confidentialité</a>
+                            <a href="<?= BASE_DIR ?>/qui-sommes-nous" class="text-reset">Présentation</a>
                         </p>
                     </div>
                     <!-- Grid column -->
@@ -233,6 +237,8 @@
     <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
     </script>
-    <script src="/assets/js/app.js"></script>
+    <script src="<?= BASE_DIR ?>/assets/js/app.js"></script>
+    <script src="<?= BASE_DIR ?>/assets/js/search.js"></script>
 </body>
+
 </html>
