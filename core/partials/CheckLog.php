@@ -2,10 +2,6 @@
 
 namespace Core\Partials;
 
-// use Core\Partials\StartSession;
-
-
-
 class CheckLog
 {
     //Verification si l'utilisateur est un employé
@@ -26,7 +22,7 @@ class CheckLog
         }
     }
 
- //Verification si l'utilisateur est un connecté
+ //Verification si l'utilisateur est connecté
     public static function checkIsNotLogged(): void
     {
         if (isset($_SESSION['user']['is_logged']) && $_SESSION['user']['is_logged']) {

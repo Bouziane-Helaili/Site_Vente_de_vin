@@ -1,13 +1,18 @@
 <?php
 
-class Sale
-{
+namespace App\Models;
 
+use Core\Model;
+
+//Gestion du détails des vents
+class Sale extends Model
+{
     private int $id;
     private int $id_product;
     private int $id_user;
-    private int $quantity_sold;
+    private int $quantity;
     private float $price_total_product;
+    protected string $table_name = "sale";
 
     /**
      * Get the value of id
@@ -58,22 +63,22 @@ class Sale
     }
 
     /**
-     * Get the value of quantity_sold
+     * Get the value of quantity
      * @return int
      */
-    public function getQuantity_sold(): int
+    public function getQuantity(): int
     {
-        return $this->quantity_sold;
+        return $this->quantity;
     }
 
     /**
-     * Set the value of quantity_sold
-     * @param int $quantity_sold
+     * Set the value of quantity
+     * @param int $quantity
      * @return  void
      */
-    public function setQuantity_sold(int $quantity_sold): void
+    public function setQuantity(int $quantity): void
     {
-        $this->quantity_sold = $quantity_sold;
+        $this->quantity = $quantity;
     }
 
     /**
@@ -94,5 +99,26 @@ class Sale
     public function setPrice_Total_Product(float $price_total_product): void
     {
         $this->$price_total_product = $price_total_product;
+    }
+
+    //Ajout d'une ligne de vente
+    public function InsertSale(): int|false
+    {
+        $stmt = $this->pdo->prepare("INSERT INTO sale (`id_product`, `quantity`) VALUES (:id_product, :quantity)");
+        $stmt->execute([
+            "id_product" => $this->id_product,
+            "quantity" => $this->quantity,
+        ]);
+        return $this->pdo->lastInsertId();
+    }
+
+//Trouver le détail d'une ligne de vente
+    public function findProductBySale()
+    {
+        $sql_query = "SELECT * FROM {$this->table_name} JOIN product ON sale.id_product= product.id";
+        $stmt = $this->pdo->prepare($sql_query);
+        $stmt->setFetchMode(\PDO::FETCH_ASSOC);
+        $stmt->execute();
+        return $stmt->fetchAll();
     }
 }

@@ -9,6 +9,7 @@ Router::register('/', 'HomeController::showLast');
 // show all products 
 Router::register('/nos-vins', 'ProductController::showAllWines');
 Router::register('/nos-coffrets', 'ProductController::showAllboxes');
+
 // product wines
 Router::register('/nos-vins/blanc', 'ProductController::showAllWhiteWines');
 Router::register('/nos-vins/rouge', 'ProductController::showAllRedWines');
@@ -50,6 +51,10 @@ Router::register('/region', 'StockController::showAllRegion');
 // Accueil espace employé
 Router::register('/employe', 'StockController::index');
 
+// Accueil espace client
+Router::register('/mon-compte', 'InvoiceController::showOrders');
+Router::register('/mon-compte/details', 'SaleController::showSales');
+
 // espace employé Commandes
 Router::register('/employe/commandes', 'OrderTrackingController::showAll');
 Router::register('/employe/commandes/details', 'OrderTrackingController::showOne');
@@ -57,6 +62,9 @@ Router::register('/employe/commandes/details', 'OrderTrackingController::showOne
 // Gestion des paiements
 Router::register('/employe/paiements', 'PaiementsController::index');
 Router::register('/pay', 'PayController::index');
+Router::register('/pay/paypal', 'PayController::paypal');
+Router::register('/pay/stripe', 'PayController::stripe');
+Router::register('/pay/success', 'PayController::success');
 
 // Gestion des stocks
 Router::register('/employe/stock', 'StockController::showAll');
@@ -74,26 +82,3 @@ Router::register('/administrateur', 'AdminController::showAll');
 Router::register('/administrateur/insert', 'AdminController::insertEmployee');
 Router::register('/administrateur/edit', 'AdminController::edit');
 Router::register('/administrateur/delete', 'AdminController::delete');
-
-// A rajouter & | à modifier
-//
-// - Home (http://bestwines.fr)
-// - Nos vins (http://bestwines.fr/nos-vins)
-// - Nos coffrets (http://bestwines.fr/nos-coffrets)
-// - Nos fournisseurs (http://bestwines.fr/nos-fournisseurs)
-// - Qui sommes-nous ? (http://bestwines.fr/qui-sommes-nous)
-// - Blog (http://bestwines.fr/blog)
-// - Espace Client (http://bestwines.fr/mon-compte)
-// En plus de ces pages principales, les pages suivantes doivent être accessibles depuis le footer :
-// - Nos vins (http://bestwines.fr/nos-vins)
-// o Nos rouges
-// o Nos blancs
-// o Nos champagnes
-// - Nos coffrets (http://bestwines.fr/nos-coffrets)
-// - Aide
-// o FAQ
-// o Mentions légales (http://bestwines.fr/mentions-legales)
-// o Contact (http://bestwines.fr/nous-contacter)
-// - Presse (http://bestwines.fr/presse)
-// - Qui sommes-nous ? (http://bestwines.fr/qui-sommes-nous)
-// - Blog (http://bestwines.fr/blog)

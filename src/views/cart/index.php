@@ -1,6 +1,5 @@
 <div id="shopping-cart">
 	<div class="txt-heading">Panier de Produits</div>
-
 	<a id="btnEmpty" href="cart/empty">Vider Panier</a>
 	<?php
 	if (isset($_SESSION["cart_item"])) {
@@ -22,12 +21,12 @@
 					$item_price = $item["quantity"] * $item["price"];
 				?>
 					<tr>
-						<td><img src="/best-wines/uploads/<?php echo $item["image"]; ?>" class="cart-item-image" /><?php echo $item["name"]; ?></td>
+						<td><img src="/best-wines/uploads/vins/<?php echo $item["image"]; ?>" class="cart-item-image" /><?php echo $item["name"]; ?></td>
 						<td><?php echo $item["id"]; ?></td>
 						<td style="text-align:right;"><?php echo $item["quantity"]; ?></td>
 						<td style="text-align:right;"><?php echo $item["price"] . " €"; ?></td>
 						<td style="text-align:right;"><?php echo number_format($item_price, 2) . " €"; ?></td>
-						<td style="text-align:center;"><a href="/best-wines/cart/remove?name=<?php echo $item["name"]; ?>" class="btnRemoveAction"><img src="uploads/icon-delete.png" alt="Remove Item" /></a></td>
+						<td style="text-align:center;"><a href="/best-wines/cart/remove?id=<?php echo $item["id"]; ?>" class="btnRemoveAction"><img src="uploads/icon-delete.png" alt="Remove Item" /></a></td>
 					</tr>
 				<?php
 					$total_quantity += $item["quantity"];
@@ -35,7 +34,6 @@
 				}
 				$_SESSION['total_price'] = $total_price ;
 				?>
-
 				<tr>
 					<td colspan="2" align="right">Total:</td>
 					<td align="right"><?php
@@ -56,8 +54,8 @@
 <div></div>
 <div class="no-records p-4">
 	<?php if (isset($_SESSION["cart_item"])) : ?>
-		<a href="/best-wines/pay" class="btn color1">Valider la commande</a>
+		<a href="/best-wines/pay" class="btn color1 p-1">Valider la commande</a>
 		
 	<?php endif ?>
-	<a href="<?= $_SESSION['last_page'] ?>" class="btn color1">Continuer mes achats</a>
+	<a href="javascript:history.go(-1)" class="btn color1 p-1">Continuer mes achats</a>
 </div>
