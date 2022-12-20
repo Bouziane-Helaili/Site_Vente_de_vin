@@ -122,7 +122,7 @@ class Promotion extends Model
         ]);
         return $this->pdo->lastInsertId();
     }
-
+//'select * FROM promotion WHERE promotion_name LIKE \'%'.$_POST['search'].'%'\'
 
     //Modification d'un code de promotion
     public function edit(int $promotion_edit)
